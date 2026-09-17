@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from sevo_core import models
 
-# Mxins
+# Mixins
 class BaseUserAdmin(admin.ModelAdmin):
     """Admin base class for models with a user owner.
 
@@ -134,7 +134,6 @@ class ImageAdmin(admin.ModelAdmin):
     list_display_links = [
         "id",
         "get_image_tag",
-        "title"
     ]
 
     list_filter = [
