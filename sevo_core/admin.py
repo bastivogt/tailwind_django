@@ -1,6 +1,8 @@
 from django.contrib import admin
 
+from sevo_core import models
 
+# Mxins
 class BaseUserAdmin(admin.ModelAdmin):
     """Admin base class for models with a user owner.
 
@@ -90,3 +92,71 @@ class BaseUserAdmin(admin.ModelAdmin):
         if not request.user.is_superuser and getattr(obj, self.user_field_name, None) is None:
             setattr(obj, self.user_field_name, request.user)
         super().save_model(request, obj, form, change)
+
+
+
+# Models
+class ImageCategoryAdmin(admin.ModelAdmin):
+    list_display = (
+        "name", 
+        "created_at", 
+        "updated_at"
+        )
+    search_fields = ("name",)
+
+
+class ImageTagAdmin(admin.ModelAdmin):
+    list_display = (
+        "name", 
+        "created_at", 
+        "updated_at"
+        )
+    search_fields = ("name",)
+
+class ImageAdmin(admin.ModelAdmin):
+    fields = [
+        "title",
+        "image",
+        "get_image_tag",
+        "category",
+        "tags"
+    ]
+    list_display = [
+        "id",
+        "get_image_tag",
+        "title", 
+        "category", 
+        "get_tags_as_string",
+        "created_at", 
+        "updated_at"
+    ]
+
+    list_display_links = [
+        "id",
+        "get_image_tag",
+        "title"
+    ]
+
+    list_filter = [
+        "category",
+        "tags",
+        "created_at",
+        "updated_at"
+    ]
+
+    search_fields = [
+        "title"
+    ]
+
+    raw_id_fields = [
+        #"category",
+    ]
+
+    readonly_fields = [
+        "get_image_tag"
+    ]
+
+
+admin.site.register(models.Image, ImageAdmin)
+admin.site.register(models.ImageCategory, ImageCategoryAdmin)
+admin.site.register(models.ImageTag, ImageTagAdmin)
