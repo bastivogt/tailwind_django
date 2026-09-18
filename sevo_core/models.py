@@ -97,3 +97,62 @@ class Image(TimeStampMixin):
     def get_tags_as_string(self):
         return ", ".join([tag.name for tag in self.tags.all()]) 
     get_tags_as_string.short_description = _("Tags")
+
+
+# Files
+
+class FileCategory(TimeStampMixin):
+    name = models.CharField(max_length=255, verbose_name=_("Name"))
+
+
+    class Meta:
+        verbose_name = _("File Category")
+        verbose_name_plural = _("File Categories")
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+class FileTag(TimeStampMixin):
+    name = models.CharField(max_length=255, verbose_name=_("Name"))
+
+
+    class Meta:
+        verbose_name = _("File Tag")
+        verbose_name_plural = _("File Tags")
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
+
+class File(TimeStampMixin):
+    title = models.CharField(max_length=255, verbose_name=_("Title"))
+    file = models.FileField(upload_to="files/", verbose_name=_("File"))
+    category = models.ForeignKey(FileCategory, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("Category"))
+    tags = models.ManyToManyField(FileTag, blank=True, verbose_name=_("Tags"))
+
+    class Meta:
+        verbose_name = _("File")
+        verbose_name_plural = _("Files")
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return self.title
+
+    def delete(self, *args, **kwargs):
+        # Delete the file from storage when the File object is deleted
+        self.file.delete(save=False)
+        super().delete(*args, **kwargs)
+
+
+    def get_file_url(self):
+        if self.file:
+            return self.file.url
+        return ""
+
+    def get_tags_as_string(self):
+        return ", ".join([tag.name for tag in self.tags.all()]) 
+    get_tags_as_string.short_description = _("Tags")

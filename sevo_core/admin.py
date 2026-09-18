@@ -96,6 +96,9 @@ class BaseUserAdmin(admin.ModelAdmin):
 
 
 # Models
+
+# Images
+
 class ImageCategoryAdmin(admin.ModelAdmin):
     list_display = (
         "name", 
@@ -155,6 +158,71 @@ class ImageAdmin(admin.ModelAdmin):
         "get_image_tag"
     ]
 
+
+
+# Files
+
+class FileCategoryAdmin(admin.ModelAdmin):
+    list_display = [
+        "name", 
+        "created_at", 
+        "updated_at"
+    ]
+    search_fields = [
+        "name"
+    ]   
+
+
+class FileTagAdmin(admin.ModelAdmin):
+    list_display = [
+        "name", 
+        "created_at", 
+        "updated_at"
+    ]
+    search_fields = [
+        "name"
+    ]
+
+class FileAdmin(admin.ModelAdmin):
+    fields = [
+        "title",
+        "file",
+        "category",
+        "tags"
+    ]
+    list_display = [
+        "id",
+        "title", 
+        "category", 
+        "get_tags_as_string",
+        "created_at", 
+        "updated_at"
+    ]
+
+    list_display_links = [
+        "id",
+        "title"
+    ]
+
+    list_filter = [
+        "category",
+        "tags",
+        "created_at",
+        "updated_at"
+    ]
+
+    search_fields = [
+        "title"
+    ]
+
+    raw_id_fields = [
+        #"category",
+    ]
+
+
+admin.site.register(models.File, FileAdmin)
+admin.site.register(models.FileCategory, FileCategoryAdmin)
+admin.site.register(models.FileTag, FileTagAdmin)
 
 admin.site.register(models.Image, ImageAdmin)
 admin.site.register(models.ImageCategory, ImageCategoryAdmin)
