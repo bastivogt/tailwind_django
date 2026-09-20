@@ -21,6 +21,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.contrib import admin
+
+
+admin.site.site_header = "Sevo Admin"
+admin.site.site_title = "Sevo Admin Portal"
+admin.site.index_title = "Welcome to Sevo Admin Portal"
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("test_app.urls"))
