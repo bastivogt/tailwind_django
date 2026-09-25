@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "test_app",
-    "sevo_core"
+    "sevo_core",
+    "sevo_user",
+    "sevo_media",
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,5 @@ MAILERS = {
         "BACKEND": "django.core.mail.backends.console.EmailBackend",
     },
 }
+
+AUTH_USER_MODEL = "sevo_user.User"
