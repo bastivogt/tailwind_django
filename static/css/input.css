@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
 
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark, cupcake;
+}
+
+
 @layer base {
     h1 {
       /*font-size: var(--text-2xl);*/
