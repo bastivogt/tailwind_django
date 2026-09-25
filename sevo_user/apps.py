@@ -3,3 +3,4 @@ from django.apps import AppConfig
 
 class SevoUserConfig(AppConfig):
     name = "sevo_user"
+    verbose_name = "User"
